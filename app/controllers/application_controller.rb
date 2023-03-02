@@ -2,6 +2,7 @@ require 'sinatra'
 require 'json'
 
 # Define a route to get all projects for a user
+class ApplicationController < Sinatra::Base
 get '/users/:id/projects' do
   content_type :json
   user_id = params[:id]
@@ -59,4 +60,5 @@ delete '/users/:id/projects/:project_id' do
     # Return an error message as JSON
     { error: 'Project not found' }.to_json
   end
+end
 end
