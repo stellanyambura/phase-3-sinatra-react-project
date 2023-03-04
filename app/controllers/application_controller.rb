@@ -12,7 +12,7 @@ get '/users/:id/projects' do
   projects.to_json
 end
 # create a new user in the database
-post '/add/user' do
+post 'https://phase-three-sinatra-project.onrender.com/add/user' do
   # check if email already exists in database
   if User.find_by(email: params[:email])
     return "Error: Email already exists"
