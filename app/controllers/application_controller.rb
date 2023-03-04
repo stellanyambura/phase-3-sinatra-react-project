@@ -22,8 +22,6 @@ post '/add/user' do
     first_name: params[:first_name],
     last_name: params[:last_name],
     email: params[:email],
-    career: params[:career],
-    bio: params[:bio],
     password: params[:password]
   )
   user.save
