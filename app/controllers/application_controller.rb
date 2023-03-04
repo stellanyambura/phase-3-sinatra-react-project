@@ -11,6 +11,10 @@ get '/users/:id/projects' do
   # Return the projects as JSON
   projects.to_json
 end
+get '/users' do 
+  users = User.all
+  users.to_json
+end
 # create a new user in the database
 post '/add/user' do
   # check if email already exists in database
