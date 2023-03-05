@@ -72,3 +72,46 @@ class ApplicationController < Sinatra::Base
   end
   
 end # added this to close the class definition
+#To create a new skill, you can uase the create method of the Skill model:
+def create
+  skill = Skill.create(skill_params)
+  if skill.valid?
+    render json: skill, status: :created
+  else
+    render json: { error: skill.errors.full_messages }, status: :unprocessable_entity
+  end
+end
+
+private
+
+def skill_params
+  params.require(:skill).permit(:name, :description, :user_id)
+end
+#To read a single skill, you can use the find method of the Skill model:
+def show
+  skill = Skill.find(params[:id])
+  render json: skill
+rescue ActiveRecord::RecordNotFound
+  render json: { error: "Skill not found" }, status: :not_found
+end
+#To update an existing skill, you can use the update method of the Skill model:
+
+def update
+  skill = Skill.find(params[:id])
+  if skill.update(skill_params)
+    render json: skill
+  else
+    render json: { error: skill.errors.full_messages }, status: :unprocessable_entity
+  end
+rescue ActiveRecord::RecordNotFound
+  render json: { error: "Skill not found" }, status: :not_found
+end
+#To delete a skill, you can use the destroy method of the Skill model:
+
+def destroy
+  skill = Skill.find(params[:id])
+  skill.destroy
+  head :no_content
+rescue ActiveRecord::RecordNotFound
+  render json: { error: "Skill not found" }, status: :not_found
+end
