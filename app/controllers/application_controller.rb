@@ -115,3 +115,61 @@ def destroy
 rescue ActiveRecord::RecordNotFound
   render json: { error: "Skill not found" }, status: :not_found
 end
+def create
+  project = Project.create(project_params)
+  if project.valid?
+    render json: project, status: :created
+  else
+    render json: { error: project.errors.full_messages }, status: :unprocessable_entity
+  end
+end
+def project_params
+  params.require(:project).permit(:title, :description, :image_url, :project_status, :project_Github_url, :user_id)
+end
+def show
+  project = Project.find(params[:id])
+  render json: project
+rescue ActiveRecord::RecordNotFound
+  render json: { error: "Project not found" }, status: :not_found
+end
+def update
+  project = Project.find(params[:id])
+  if project.update(project_params)
+    render json: project
+  else
+    render json: { error: project.errors.full_messages }, status: :unprocessable_entity
+  end
+rescue ActiveRecord::RecordNotFound
+  render json: { error: "Project not found" }, status: :not_found
+end
+def destroy
+  project = Project.find(params[:id])
+  project.destroy
+  head :no_content
+rescue ActiveRecord::RecordNotFound
+  render json: { error: "Project not found" }, status: :not_found
+end
+get '/projects' do
+  project = Project.all
+  project.to_json
+end
+# Add a new project to the database
+post '/projects' do
+  project = Project.create(params)
+  project.to_json
+end
+# Fetch project by :id from the database
+get '/projects/:id' do
+  project = Project.find(params[:id])
+  project.to_json
+end
+ # Update project data from the database
+ patch '/projects/:id' do
+  project = Project.find(params[:id])
+  project.update(
+    project_title: params[:project_title],
+    project_description: params[:project_description],
+    project_language: params[:project_language]
+  )
+  project.to_json
+end
