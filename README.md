@@ -77,9 +77,8 @@ You can start your server with:
 ```console
 $ bundle exec rake server
 ```
-https://phase-three-sinatra-project.onrender.com
-This will run your server on port
-[http://localhost:9292](http://localhost:9292).
+
+
 
 ### Frontend Setup
 
@@ -103,7 +102,7 @@ Your React app should make fetch requests to your Sinatra backend! Here's an
 example:
 
 ```js
-fetch("http://localhost:9292/test")
+fetch("")
   .then((r) => r.json())
   .then((data) => console.log(data));
 ```
@@ -136,3 +135,7 @@ fetch("http://localhost:9292/test")
 [dbdiagram.io]: https://dbdiagram.io/
 [postman download]: https://www.postman.com/downloads/
 [network tab]: https://developer.chrome.com/docs/devtools/network/
+## Author 
+Stellaa Gitonga
+#### deployment link for backend https://phase-three-sinatra-project.onrender.com
+#### deployement link for front end https://portfolio-project-alpha-five.vercel.app/
