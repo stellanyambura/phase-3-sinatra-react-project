@@ -153,23 +153,25 @@ get '/projects' do
   project = Project.all
   project.to_json
 end
-# Add a new project to the database
-post '/projects' do
-  project = Project.create(params)
-  project.to_json
-end
-# Fetch project by :id from the database
-get '/projects/:id' do
-  project = Project.find(params[:id])
-  project.to_json
-end
- # Update project data from the database
- patch '/projects/:id' do
-  project = Project.find(params[:id])
-  project.update(
-    project_title: params[:project_title],
-    project_description: params[:project_description],
-    project_language: params[:project_language]
+
+ 
+# addign a new project
+post '/add/projects/:id' do
+  project = Project.create(
+    title: params[:title],
+    description: params[:description],
+    project_Github_url: params[:Github_url],
+    user_id: params[:id]
   )
-  project.to_json
+end
+# Define a route to update an existing project for a user
+put '/users/:id/projects/:project_id' do
+  project = User.find(params[:id]).projects.find(params[:project_id])
+  project.update(title: params[:title], description: params[:description], project_Github_url: params[:github_url])
+end
+
+# delete a project
+delete '/users/:id/projects/:project_id' do
+  project = User.find(params[:id]).projects.find(params[:project_id])
+  project.destroy
 end
